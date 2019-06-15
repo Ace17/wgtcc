@@ -217,7 +217,6 @@ public:
       return Token::NOTOK;	// Not a key word type
     return kwIter->second;
   }
-  static bool IsKeyWord(const std::string& name);
   static bool IsKeyWord(int tag) { return CONST <= tag && tag < IDENTIFIER; }
   bool IsKeyWord() const { return IsKeyWord(tag_); }
   bool IsPunctuator() const { return 0 <= tag_ && tag_ <= ELLIPSIS; }
