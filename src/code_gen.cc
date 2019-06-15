@@ -11,7 +11,6 @@
 #include <set>
 
 
-class Parser;
 struct Addr;
 struct ROData;
 template<> class Evaluator<Addr>;
@@ -122,8 +121,8 @@ public:
   virtual void VisitTranslationUnit(TranslationUnit* unit);
 
 
-  static void SetInOut(Parser* parser, FILE* outFile) {
-    parser_ = parser;
+  static void SetInOut(TranslationUnit* unit, FILE* outFile) {
+    unit_ = unit;
     outFile_ = outFile;
   }
 
@@ -238,7 +237,7 @@ protected:
 
 protected:
   static const std::string* last_file;
-  static Parser* parser_;
+  static TranslationUnit* unit_;
   static FILE* outFile_;
   static int offset_;
 
@@ -282,7 +281,7 @@ extern std::string filename_out;
 extern bool debug;
 
 const std::string* Generator::last_file = nullptr;
-Parser* Generator::parser_ = nullptr;
+TranslationUnit* Generator::unit_ = nullptr;
 FILE* Generator::outFile_ = nullptr;
 static RODataList rodatas_;
 std::vector<Declaration*> Generator::staticDecls_;
@@ -1621,7 +1620,7 @@ void Generator::VisitTranslationUnit(TranslationUnit* unit) {
 
 void Generator::Gen() {
   Emit(".file", "\"" + filename_in + "\"");
-  VisitTranslationUnit(parser_->Unit());
+  VisitTranslationUnit(unit_);
 }
 
 
@@ -1835,8 +1834,8 @@ std::string AddConstant(Constant* cons) {
 }
 
 
-void GenerateCode(Parser* parser, FILE* outFile) {
-  Generator::SetInOut(parser, outFile);
+void GenerateCode(TranslationUnit* unit, FILE* outFile) {
+  Generator::SetInOut(unit, outFile);
   Generator().Gen();
 }
 

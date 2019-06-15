@@ -4,10 +4,10 @@
 #include <cstdio>
 #include <string>
 
-class Parser;
+class TranslationUnit;
 class Constant;
 
 std::string AddConstant(Constant* cons);
-void GenerateCode(Parser* parser, FILE* outFile);
+void GenerateCode(TranslationUnit* unit, FILE* outFile);
 
 #endif

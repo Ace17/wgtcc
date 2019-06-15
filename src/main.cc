@@ -105,7 +105,7 @@ static int RunWgtcc() {
 
   Parser parser(ts);
   parser.Parse();
-  GenerateCode(&parser, fp);
+  GenerateCode(parser.Unit(), fp);
   fclose(fp);
   return 0;
 }
