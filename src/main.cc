@@ -105,8 +105,7 @@ static int RunWgtcc() {
 
   Parser parser(ts);
   parser.Parse();
-  Generator::SetInOut(&parser, fp);
-  Generator().Gen();
+  GenerateCode(&parser, fp);
   fclose(fp);
   return 0;
 }
