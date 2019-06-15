@@ -8,7 +8,6 @@
 #include <list>
 #include <set>
 #include <string>
-#include <unordered_map>
 
 
 class Generator;
@@ -210,12 +209,7 @@ public:
   virtual ~Token() {}
 
   // Token::NOTOK represents not a kw.
-  static int KeyWordTag(const std::string& key) {
-    auto kwIter = kwTypeMap_.find(key);
-    if (kwTypeMap_.end() == kwIter)
-      return Token::NOTOK;	// Not a key word type
-    return kwIter->second;
-  }
+  static int KeyWordTag(const std::string& key);
   static bool IsKeyWord(int tag) { return CONST <= tag && tag < IDENTIFIER; }
   bool IsKeyWord() const { return IsKeyWord(tag_); }
   bool IsPunctuator() const { return 0 <= tag_ && tag_ <= ELLIPSIS; }
@@ -225,13 +219,7 @@ public:
   bool IsEOF() const { return tag_ == Token::END; }
   bool IsTypeSpecQual() const { return CONST <= tag_ && tag_ <= ENUM; }
   bool IsDecl() const { return CONST <= tag_ && tag_ <= REGISTER; }
-  static const char* Lexeme(int tag) {
-    auto iter = tagLexemeMap_.find(tag);
-    if (iter == tagLexemeMap_.end())
-      return nullptr;
-
-    return iter->second;
-  }
+  static const char* Lexeme(int tag);
 
   int tag_;
 
@@ -252,9 +240,6 @@ private:
   Token(const Token& other) {
     *this = other;
   }
-
-  static const std::unordered_map<std::string, int> kwTypeMap_;
-  static const std::unordered_map<int, const char*> tagLexemeMap_;
 };
 
 

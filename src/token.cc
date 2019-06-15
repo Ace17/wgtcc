@@ -2,11 +2,12 @@
 
 #include "mem_pool.h"
 #include "parser.h"
+#include <unordered_map>
 
 
 static MemPoolImp<Token> tokenPool;
 
-const std::unordered_map<std::string, int> Token::kwTypeMap_ {
+static const std::unordered_map<std::string, int> kwTypeMap_ {
   { "auto", Token::AUTO },
   { "break", Token::BREAK },
   { "case", Token::CASE },
@@ -54,7 +55,7 @@ const std::unordered_map<std::string, int> Token::kwTypeMap_ {
   { "_Thread_local", Token::THREAD },
 };
 
-const std::unordered_map<int, const char*> Token::tagLexemeMap_ {
+static const std::unordered_map<int, const char*> tagLexemeMap_ {
   { '(', "(" },
   { ')', ")" },
   { '[', "[" },
@@ -173,6 +174,23 @@ Token* Token::New(int tag,
                   const std::string& str,
                   bool ws) {
   return new (tokenPool.Alloc()) Token(tag, loc, str, ws);
+}
+
+
+int Token::KeyWordTag(const std::string& key) {
+  auto kwIter = kwTypeMap_.find(key);
+  if (kwTypeMap_.end() == kwIter)
+    return Token::NOTOK;	// Not a key word type
+  return kwIter->second;
+}
+
+
+const char* Token::Lexeme(int tag) {
+  auto iter = tagLexemeMap_.find(tag);
+  if (iter == tagLexemeMap_.end())
+    return nullptr;
+
+  return iter->second;
 }
 
 
