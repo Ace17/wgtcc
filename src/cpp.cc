@@ -558,7 +558,6 @@ void Preprocessor::ParseElif(TokenSequence ls) {
   }
   bool cond;
   if (expr->Type()->IsFloat()) {
-    std::cout << Evaluator<double>().Eval(expr) << std::endl;
     cond = static_cast<bool>(Evaluator<double>().Eval(expr));
   } else {
     cond = static_cast<bool>(Evaluator<long>().Eval(expr));
