@@ -760,9 +760,8 @@ std::string* Preprocessor::SearchFile(const std::string& name,
     searchPaths_.push_front(GetDir(curPath));
   }
 
-  auto iter = searchPaths_.begin();
-  for (; iter != searchPaths_.end(); ++iter) {
-    auto dd = open(iter->c_str(), O_RDONLY);
+  for (auto& searchPath : searchPaths_) {
+    auto dd = open(searchPath.c_str(), O_RDONLY);
     if (dd == -1) // TODO(wgtdkp): or ensure it before preprocessing
       continue;
     auto fd = openat(dd, name.c_str(), O_RDONLY);
@@ -771,7 +770,7 @@ std::string* Preprocessor::SearchFile(const std::string& name,
       // Intentional, so that recursive include
       // will result in running out of file descriptor
       //close(fd);
-      auto path = *iter + name;
+      auto path = searchPath + name;
       if (next) {
         if (path != curPath)
           continue;
