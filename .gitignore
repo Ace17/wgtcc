@@ -36,8 +36,15 @@
 *.dSYM/
 *.su
 
+# Vim temporary files
+*.swp
+
+# ctags file
+/tags
+
 .vscode
 .clang-format
 
 # Build
 build
+bin
