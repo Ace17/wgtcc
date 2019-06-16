@@ -263,7 +263,7 @@ public:
   virtual PointerType* ToPointer() { return this; }
   virtual const PointerType* ToPointer() const { return this; }
   virtual bool Compatible(const Type& other) const;
-  virtual int Width() const { return 8; }
+  virtual int Width() const { return machineWidth_; }
   virtual bool IsScalar() const { return true; }
   virtual bool IsVoidPointer() const { return derived_->ToVoid(); }
   virtual std::string Str() const {
