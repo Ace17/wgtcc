@@ -6,7 +6,6 @@
 
 #include <cassert>
 #include <algorithm>
-#include <iostream>
 
 
 static MemPoolImp<VoidType>     voidTypePool;

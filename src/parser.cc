@@ -7,7 +7,6 @@
 #include "scope.h"
 #include "type.h"
 
-#include <iostream>
 #include <set>
 #include <string>
 #include <climits>

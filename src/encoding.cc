@@ -3,7 +3,6 @@
 #include <climits>
 #include <codecvt>
 #include <locale>
-#include <iostream>
 
 
 static void Append16LE(std::string& str, char16_t c) {

@@ -1,7 +1,6 @@
 #ifndef _WGTCC_SCOPE_H_
 #define _WGTCC_SCOPE_H_
 
-#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
