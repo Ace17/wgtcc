@@ -292,7 +292,6 @@ public:
     return derived_->Str() + "[]:" + std::to_string(Width());
   }
 
-  int GetElementOffset(int idx) const { return derived_->Width() * idx; }
   int Len() const { return len_; }
   void SetLen(int len) { len_ = len; }
   bool Variadic() const { return lenExpr_ != nullptr; }
