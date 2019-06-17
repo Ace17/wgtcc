@@ -136,8 +136,6 @@ protected:
   void GenMemberRefOp(BinaryOp* binaryOp);
   void GenAndOp(BinaryOp* binaryOp);
   void GenOrOp(BinaryOp* binaryOp);
-  void GenAddOp(BinaryOp* binaryOp);
-  void GenSubOp(BinaryOp* binaryOp);
   void GenAssignOp(BinaryOp* assign);
   void GenCastOp(UnaryOp* cast);
   void GenDerefOp(UnaryOp* deref);
@@ -232,8 +230,6 @@ protected:
   void Restore(bool flt);
 
   void Save(bool flt);
-
-  void Exchange(bool flt);
 
 protected:
   static const std::string* last_file;
