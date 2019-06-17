@@ -23,7 +23,6 @@ static bool only_preprocess = false;
 static bool only_compile = false;
 static bool specified_out_name = false;
 static std::list<std::string> filenames_in;
-static std::list<std::string> gcc_filenames_in;
 static std::list<std::string> gcc_args;
 static std::list<std::string> defines;
 static std::list<std::string> include_paths;
@@ -234,7 +233,6 @@ int main(int argc, char* argv[]) {
     return 0;
   }
 
-  std::list<std::string> filenames_out;
   for (auto& filename: filenames_in) {
     if (GetExtension(filename) == ".c") {
       gcc_args.push_back(GetName(filename));
