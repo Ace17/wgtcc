@@ -111,7 +111,7 @@ private:
     return ++tag;
   }
 
-  int tag_; // 使用整型的tag值，而不直接用字符串
+  int tag_; // Use integer tag values instead of strings directly
 };
 
 
@@ -292,11 +292,11 @@ protected:
 
 /*
  * '+', '-', '*', '/', '%', '<', '>', '<<', '>>', '|', '&', '^'
- * '=',(复合赋值运算符被拆分为两个运算)
+ ** '=', (the compound assignment operator is split into two operations)
  * '==', '!=', '<=', '>=',
  * '&&', '||'
- * '['(下标运算符), '.'(成员运算符)
- * ','(逗号运算符),
+ * '['(subscript operator), '.' (member operator)
+ * ',' (comma operator),
  */
 class BinaryOp : public Expr {
   template<typename T> friend class Evaluator;
