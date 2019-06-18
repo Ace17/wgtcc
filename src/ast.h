@@ -58,8 +58,6 @@ public:
 
 protected:
   ASTNode() {}
-
-  MemPool* pool_ {nullptr};
 };
 
 using ExtDecl = ASTNode;

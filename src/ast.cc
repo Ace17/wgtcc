@@ -171,8 +171,6 @@ BinaryOp* BinaryOp::New(const Token* tok, int op, Expr* lhs, Expr* rhs) {
   }
 
   auto ret = new (binaryOpPool.Alloc()) BinaryOp(tok, op, lhs, rhs);
-  ret->pool_ = &binaryOpPool;
-
   ret->TypeChecking();
   return ret;
 }
@@ -416,8 +414,6 @@ void BinaryOp::AssignOpTypeChecking() {
 
 UnaryOp* UnaryOp::New(int op, Expr* operand, QualType type) {
   auto ret = new (unaryOpPool.Alloc()) UnaryOp(op, operand, type);
-  ret->pool_ = &unaryOpPool;
-
   ret->TypeChecking();
   return ret;
 }
@@ -544,8 +540,6 @@ ConditionalOp* ConditionalOp::New(const Token* tok,
                                   Expr* exprFalse) {
   auto ret = new (conditionalOpPool.Alloc())
       ConditionalOp(cond, exprTrue, exprFalse);
-  ret->pool_ = &conditionalOpPool;
-
   ret->TypeChecking();
   return ret;
 }
@@ -589,8 +583,6 @@ void ConditionalOp::TypeChecking() {
 
 FuncCall* FuncCall::New(Expr* designator, const ArgList& args) {
   auto ret = new (funcCallPool.Alloc()) FuncCall(designator, args);
-  ret->pool_ = &funcCallPool;
-
   ret->TypeChecking();
   return ret;
 }
@@ -642,23 +634,17 @@ void FuncCall::TypeChecking() {
 Identifier* Identifier::New(const Token* tok,
                             QualType type,
                             enum Linkage linkage) {
-  auto ret = new (identifierPool.Alloc()) Identifier(tok, type, linkage);
-  ret->pool_ = &identifierPool;
-  return ret;
+  return new (identifierPool.Alloc()) Identifier(tok, type, linkage);
 }
 
 
 Enumerator* Enumerator::New(const Token* tok, int val) {
-  auto ret = new (enumeratorPool.Alloc()) Enumerator(tok, val);
-  ret->pool_ = &enumeratorPool;
-  return ret;
+  return new (enumeratorPool.Alloc()) Enumerator(tok, val);
 }
 
 
 Declaration* Declaration::New(Object* obj) {
-  auto ret = new (initializationPool.Alloc()) Declaration(obj);
-  ret->pool_ = &initializationPool;
-  return ret;
+  return new (initializationPool.Alloc()) Declaration(obj);
 }
 
 void Declaration::AddInit(Initializer init) {
@@ -684,7 +670,6 @@ Object* Object::New(const Token* tok,
                     unsigned char bitFieldWidth) {
   auto ret = new (objectPool.Alloc())
              Object(tok, type, storage, linkage, bitFieldBegin, bitFieldWidth);
-  ret->pool_ = &objectPool;
 
   static long id = 0;
   if (ret->IsStatic() || ret->Anonymous())
@@ -701,7 +686,6 @@ Object* Object::NewAnony(const Token* tok,
                          unsigned char bitFieldWidth) {
   auto ret = new (objectPool.Alloc())
              Object(tok, type, storage, linkage, bitFieldBegin, bitFieldWidth);
-  ret->pool_ = &objectPool;
   ret->anonymous_ = true;
 
   static long id = 0;
@@ -717,17 +701,13 @@ Object* Object::NewAnony(const Token* tok,
 
 Constant* Constant::New(const Token* tok, int tag, long val) {
   auto type = ArithmType::New(tag);
-  auto ret = new (constantPool.Alloc()) Constant(tok, type, val);
-  ret->pool_ = &constantPool;
-  return ret;
+  return new (constantPool.Alloc()) Constant(tok, type, val);
 }
 
 
 Constant* Constant::New(const Token* tok, int tag, double val) {
   auto type = ArithmType::New(tag);
-  auto ret = new (constantPool.Alloc()) Constant(tok, type, val);
-  ret->pool_ = &constantPool;
-  return ret;
+  return new (constantPool.Alloc()) Constant(tok, type, val);
 }
 
 
@@ -736,7 +716,6 @@ Constant* Constant::New(const Token* tok, int tag, const std::string* val) {
   auto type = ArrayType::New(val->size() / derived->Width(), derived);
 
   auto ret = new (constantPool.Alloc()) Constant(tok, type, val);
-  ret->pool_ = &constantPool;
 
   static long id = 0;
   ret->id_ = ++id;
@@ -759,9 +738,7 @@ std::string Constant::SValRepr() const {
  */
 
 TempVar* TempVar::New(QualType type) {
-  auto ret = new (tempVarPool.Alloc()) TempVar(type);
-  ret->pool_ = &tempVarPool;
-  return ret;
+  return new (tempVarPool.Alloc()) TempVar(type);
 }
 
 
@@ -770,52 +747,38 @@ TempVar* TempVar::New(QualType type) {
  */
 
 EmptyStmt* EmptyStmt::New() {
-  auto ret = new (emptyStmtPool.Alloc()) EmptyStmt();
-  ret->pool_ = &emptyStmtPool;
-  return ret;
+  return new (emptyStmtPool.Alloc()) EmptyStmt();
 }
 
 
 // The else stmt could be null
 IfStmt* IfStmt::New(Expr* cond, Stmt* then, Stmt* els) {
-  auto ret = new (ifStmtPool.Alloc()) IfStmt(cond, then, els);
-  ret->pool_ = &ifStmtPool;
-  return ret;
+  return new (ifStmtPool.Alloc()) IfStmt(cond, then, els);
 }
 
 
 CompoundStmt* CompoundStmt::New(std::list<Stmt*>& stmts, ::Scope* scope) {
-  auto ret = new (compoundStmtPool.Alloc()) CompoundStmt(stmts, scope);
-  ret->pool_ = &compoundStmtPool;
-  return ret;
+  return new (compoundStmtPool.Alloc()) CompoundStmt(stmts, scope);
 }
 
 
 JumpStmt* JumpStmt::New(LabelStmt* label) {
-  auto ret = new (jumpStmtPool.Alloc()) JumpStmt(label);
-  ret->pool_ = &jumpStmtPool;
-  return ret;
+  return new (jumpStmtPool.Alloc()) JumpStmt(label);
 }
 
 
 ReturnStmt* ReturnStmt::New(Expr* expr) {
-  auto ret = new (returnStmtPool.Alloc()) ReturnStmt(expr);
-  ret->pool_ = &returnStmtPool;
-  return ret;
+  return new (returnStmtPool.Alloc()) ReturnStmt(expr);
 }
 
 
 LabelStmt* LabelStmt::New() {
-  auto ret = new (labelStmtPool.Alloc()) LabelStmt();
-  ret->pool_ = &labelStmtPool;
-  return ret;
+  return new (labelStmtPool.Alloc()) LabelStmt();
 }
 
 
 FuncDef* FuncDef::New(Identifier* ident, LabelStmt* retLabel) {
-  auto ret = new (funcDefPool.Alloc()) FuncDef(ident, retLabel);
-  ret->pool_ = &funcDefPool;
-  return ret;
+  return new (funcDefPool.Alloc()) FuncDef(ident, retLabel);
 }
 
 
